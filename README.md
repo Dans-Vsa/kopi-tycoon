@@ -17,7 +17,8 @@ File `KopiTycoon.exe` dan `KopiTycoon.pck` harus berada di folder yang sama.
 - Sistem unlock: generator dan fitur baru terbuka bertahap.
 - Upgrade Seduhan (nilai klik ×2 per level) dan Prestige (Biji Emas, +10% penghasilan permanen).
 - Save otomatis dan penghasilan offline (maks. 8 jam).
-- Efek suara dan musik latar.
+- Efek suara dan musik latar, dengan tombol Suara ON/OFF.
+- Tombol Reset Data (dengan konfirmasi) untuk memulai dari awal.
 
 ## Mekanik
 

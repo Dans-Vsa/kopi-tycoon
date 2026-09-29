@@ -21,6 +21,9 @@ const PRESTIGE_UNLOCK_EARNED := 250_000.0
 @onready var banner_label: Label = %BannerLabel
 @onready var prestige_dialog: ConfirmationDialog = %PrestigeDialog
 @onready var sound_toggle: Button = %SoundToggle
+@onready var reset_button: Button = %ResetButton
+@onready var reset_dialog: ConfirmationDialog = %ResetDialog
+@onready var cafe_view: Control = %CafeView
 @onready var sfx_click: AudioStreamPlayer = %SfxClick
 @onready var sfx_buy: AudioStreamPlayer = %SfxBuy
 @onready var sfx_upgrade: AudioStreamPlayer = %SfxUpgrade
@@ -42,6 +45,8 @@ func _ready() -> void:
 	click_upgrade_button.pressed.connect(_on_click_upgrade)
 	prestige_button.pressed.connect(_on_prestige_pressed)
 	prestige_dialog.confirmed.connect(_on_prestige_confirmed)
+	reset_button.pressed.connect(reset_dialog.popup_centered)
+	reset_dialog.confirmed.connect(_on_reset_confirmed)
 
 	# Urutan tombol di GeneratorList harus sama dengan GameState.GENERATORS.
 	for i in generator_list.get_child_count():
@@ -209,6 +214,13 @@ func _on_buy_generator(index: int) -> void:
 func _on_sound_toggled(muted: bool) -> void:
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), muted)
 	sound_toggle.text = "Suara: OFF" if muted else "Suara: ON"
+
+
+func _on_reset_confirmed() -> void:
+	GameState.reset_game()
+	cafe_view.clear_customers()
+	_banner_queue.clear()
+	info_label.text = "Data berhasil direset. Klik cangkir kopi untuk mulai lagi!"
 
 
 func _on_prestige_pressed() -> void:

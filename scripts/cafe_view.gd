@@ -49,6 +49,13 @@ func _process(delta: float) -> void:
 			_spawn_customer(income * interval)
 
 
+## Menghapus semua pelanggan yang sedang berada di kafe (dipakai saat reset data).
+func clear_customers() -> void:
+	for customer in customers.get_children():
+		customer.queue_free()
+	_spawn_timer = 0.0
+
+
 ## Makin banyak generator, makin sering pelanggan datang.
 func _spawn_interval() -> float:
 	var total := 0

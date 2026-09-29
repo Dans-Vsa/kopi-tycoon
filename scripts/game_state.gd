@@ -171,6 +171,7 @@ func reset_game() -> void:
 	total_earned = 0.0
 	click_level = 0
 	golden_beans = 0
+	offline_earnings = 0.0
 	owned.fill(0)
 	save_game()
 
