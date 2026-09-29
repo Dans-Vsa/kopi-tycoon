@@ -1,0 +1,211 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/cafe_view.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/cafe/interior.svg" id="2_interior"]
+[ext_resource type="Texture2D" path="res://assets/cafe/counter.svg" id="3_counter"]
+[ext_resource type="Texture2D" path="res://assets/cafe/plant.svg" id="4_plant"]
+[ext_resource type="Texture2D" path="res://assets/cafe/lamp.svg" id="5_lamp"]
+[ext_resource type="Texture2D" path="res://assets/icons/barista.svg" id="6_barista"]
+[ext_resource type="Texture2D" path="res://assets/icons/espresso.svg" id="7_espresso"]
+[ext_resource type="Texture2D" path="res://assets/icons/cart.svg" id="8_cart"]
+[ext_resource type="Texture2D" path="res://assets/icons/factory.svg" id="9_factory"]
+[ext_resource type="Texture2D" path="res://assets/icons/plantation.svg" id="10_plantation"]
+
+[node name="CafeView" type="Control"]
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 200.0
+clip_contents = true
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Interior" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 500.0
+offset_bottom = 200.0
+mouse_filter = 2
+texture = ExtResource("2_interior")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Plantation" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 330.0
+offset_top = 38.0
+offset_right = 384.0
+offset_bottom = 92.0
+mouse_filter = 2
+texture = ExtResource("10_plantation")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Factory" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 394.0
+offset_top = 38.0
+offset_right = 448.0
+offset_bottom = 92.0
+mouse_filter = 2
+texture = ExtResource("9_factory")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Lamp1" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 110.0
+offset_top = 0.0
+offset_right = 138.0
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("5_lamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Lamp2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 290.0
+offset_top = 0.0
+offset_right = 318.0
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("5_lamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Barista1" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 56.0
+offset_right = 120.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("6_barista")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Barista2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 112.0
+offset_top = 56.0
+offset_right = 168.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("6_barista")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Barista3" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 160.0
+offset_top = 56.0
+offset_right = 216.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("6_barista")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Counter" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 108.0
+offset_right = 258.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("3_counter")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Espresso1" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 14.0
+offset_top = 62.0
+offset_right = 62.0
+offset_bottom = 110.0
+mouse_filter = 2
+texture = ExtResource("7_espresso")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Espresso2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 206.0
+offset_top = 62.0
+offset_right = 254.0
+offset_bottom = 110.0
+mouse_filter = 2
+texture = ExtResource("7_espresso")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Plant1" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 282.0
+offset_top = 80.0
+offset_right = 326.0
+offset_bottom = 140.0
+mouse_filter = 2
+texture = ExtResource("4_plant")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Plant2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 455.0
+offset_top = 78.0
+offset_right = 499.0
+offset_bottom = 138.0
+mouse_filter = 2
+texture = ExtResource("4_plant")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Cart" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 368.0
+offset_top = 122.0
+offset_right = 440.0
+offset_bottom = 194.0
+mouse_filter = 2
+texture = ExtResource("8_cart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Customers" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HintLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 146.0
+offset_right = 500.0
+offset_bottom = 196.0
+theme_override_colors/font_outline_color = Color(0.231, 0.141, 0.09, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 17
+text = "Rekrut Barista agar pelanggan mulai datang!"
+horizontal_alignment = 1
+vertical_alignment = 1

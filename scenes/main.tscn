@@ -1,0 +1,320 @@
+[gd_scene load_steps=20 format=3]
+
+[ext_resource type="Script" uid="uid://dk21oaglw5x4m" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Theme" path="res://assets/kopi_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/background.svg" id="3_bg"]
+[ext_resource type="Texture2D" path="res://assets/icons/coin.svg" id="4_coin"]
+[ext_resource type="Texture2D" path="res://assets/icons/cup.svg" id="5_cup"]
+[ext_resource type="Texture2D" path="res://assets/icons/upgrade.svg" id="6_upgrade"]
+[ext_resource type="Texture2D" path="res://assets/icons/bean_gold.svg" id="7_bean"]
+[ext_resource type="Texture2D" path="res://assets/icons/barista.svg" id="8_barista"]
+[ext_resource type="Texture2D" path="res://assets/icons/espresso.svg" id="9_espresso"]
+[ext_resource type="Texture2D" path="res://assets/icons/cart.svg" id="10_cart"]
+[ext_resource type="Texture2D" path="res://assets/icons/cafe.svg" id="11_cafe"]
+[ext_resource type="Texture2D" path="res://assets/icons/factory.svg" id="12_factory"]
+[ext_resource type="Texture2D" path="res://assets/icons/plantation.svg" id="13_plantation"]
+[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="14_click"]
+[ext_resource type="AudioStream" path="res://assets/audio/buy.wav" id="15_buy"]
+[ext_resource type="AudioStream" path="res://assets/audio/upgrade.wav" id="16_upgrade"]
+[ext_resource type="AudioStream" path="res://assets/audio/prestige.wav" id="17_prestige"]
+[ext_resource type="AudioStream" path="res://assets/audio/music.wav" id="18_music"]
+[ext_resource type="PackedScene" path="res://scenes/cafe_view.tscn" id="19_cafe"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_main")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Columns" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="Left" type="VBoxContainer" parent="Margin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Header" type="HBoxContainer" parent="Margin/Columns/Left"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Margin/Columns/Left/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.757, 0.306, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 36
+text = "KOPI TYCOON"
+vertical_alignment = 1
+
+[node name="CoinPanel" type="PanelContainer" parent="Margin/Columns/Left/Header"]
+layout_mode = 2
+
+[node name="CoinRow" type="HBoxContainer" parent="Margin/Columns/Left/Header/CoinPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CoinIcon" type="TextureRect" parent="Margin/Columns/Left/Header/CoinPanel/CoinRow"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("4_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinsLabel" type="Label" parent="Margin/Columns/Left/Header/CoinPanel/CoinRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "0 Koin"
+
+[node name="RateLabel" type="Label" parent="Margin/Columns/Left"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "0 koin/detik   |   Biji Emas: 0 (x1.0)"
+horizontal_alignment = 1
+
+[node name="CafeFrame" type="PanelContainer" parent="Margin/Columns/Left"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CafeView" parent="Margin/Columns/Left/CafeFrame" instance=ExtResource("19_cafe")]
+layout_mode = 2
+
+[node name="BottomRow" type="HBoxContainer" parent="Margin/Columns/Left"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ClickArea" type="VBoxContainer" parent="Margin/Columns/Left/BottomRow"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="ClickButton" type="TextureButton" parent="Margin/Columns/Left/BottomRow/ClickArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Klik untuk menyeduh kopi!"
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_cup")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ClickValueLabel" type="Label" parent="Margin/Columns/Left/BottomRow/ClickArea"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.757, 0.306, 1)
+theme_override_font_sizes/font_size = 15
+text = "+1 koin / seduhan"
+horizontal_alignment = 1
+
+[node name="Actions" type="VBoxContainer" parent="Margin/Columns/Left/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ClickUpgradeButton" type="Button" parent="Margin/Columns/Left/BottomRow/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+text = "Upgrade Seduhan (Lv 0)
+Harga: 50"
+icon = ExtResource("6_upgrade")
+alignment = 0
+
+[node name="PrestigeButton" type="Button" parent="Margin/Columns/Left/BottomRow/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+text = "Prestige
++0 Biji Emas"
+icon = ExtResource("7_bean")
+alignment = 0
+
+[node name="InfoLabel" type="Label" parent="Margin/Columns/Left/BottomRow/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Klik cangkir kopi untuk mulai berjualan!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="GeneratorPanel" type="PanelContainer" parent="Margin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="VBoxContainer" parent="Margin/Columns/GeneratorPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GeneratorTitle" type="Label" parent="Margin/Columns/GeneratorPanel/Right"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.757, 0.306, 1)
+theme_override_font_sizes/font_size = 24
+text = "Generator Otomatis"
+horizontal_alignment = 1
+
+[node name="GeneratorList" type="VBoxContainer" parent="Margin/Columns/GeneratorPanel/Right"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Barista" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+text = "Barista  (x0)
++0.1/detik   -   Harga: 15"
+icon = ExtResource("8_barista")
+alignment = 0
+
+[node name="MesinEspresso" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+text = "Mesin Espresso  (x0)
++1/detik   -   Harga: 100"
+icon = ExtResource("9_espresso")
+alignment = 0
+
+[node name="GerobakKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+text = "Gerobak Kopi  (x0)
++8/detik   -   Harga: 1.10K"
+icon = ExtResource("10_cart")
+alignment = 0
+
+[node name="KedaiKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+text = "Kedai Kopi  (x0)
++47/detik   -   Harga: 12.00K"
+icon = ExtResource("11_cafe")
+alignment = 0
+
+[node name="PabrikRoasting" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+text = "Pabrik Roasting  (x0)
++260/detik   -   Harga: 130.00K"
+icon = ExtResource("12_factory")
+alignment = 0
+
+[node name="PerkebunanKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+text = "Perkebunan Kopi  (x0)
++1.40K/detik   -   Harga: 1.40M"
+icon = ExtResource("13_plantation")
+alignment = 0
+
+[node name="SoundToggle" type="Button" parent="Margin/Columns/GeneratorPanel/Right"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 14
+toggle_mode = true
+text = "Suara: ON"
+
+[node name="FloatingTexts" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="UnlockBanner" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -230.0
+offset_top = 14.0
+offset_right = 230.0
+offset_bottom = 70.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="BannerLabel" type="Label" parent="UnlockBanner"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.757, 0.306, 1)
+theme_override_font_sizes/font_size = 20
+text = "BARU TERBUKA!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PrestigeDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Prestige"
+initial_position = 2
+size = Vector2i(460, 140)
+dialog_text = "Reset koin, upgrade, dan generator untuk mendapat Biji Emas?
+Setiap Biji Emas memberi bonus +10% ke semua penghasilan."
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="SfxClick" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("14_click")
+volume_db = -6.0
+max_polyphony = 4
+
+[node name="SfxBuy" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("15_buy")
+volume_db = -8.0
+max_polyphony = 3
+
+[node name="SfxUpgrade" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("16_upgrade")
+volume_db = -6.0
+
+[node name="SfxPrestige" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("17_prestige")
+volume_db = -4.0
+
+[node name="Music" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("18_music")
+volume_db = -14.0
+autoplay = true
