@@ -49,8 +49,13 @@ func _process(delta: float) -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		save_game()
+	# Di web, menutup tab tidak selalu memicu WM_CLOSE_REQUEST, jadi simpan
+	# juga saat jendela/tab kehilangan fokus atau aplikasi dijeda.
+	match what:
+		NOTIFICATION_WM_CLOSE_REQUEST, \
+		NOTIFICATION_APPLICATION_FOCUS_OUT, \
+		NOTIFICATION_APPLICATION_PAUSED:
+			save_game()
 
 
 # --- Perhitungan ---
@@ -103,6 +108,7 @@ func buy_generator(index: int) -> bool:
 		return false
 	coins -= cost
 	owned[index] += 1
+	save_game() # Simpan segera agar pembelian tidak hilang jika tab ditutup.
 	return true
 
 
@@ -112,6 +118,7 @@ func buy_click_upgrade() -> bool:
 		return false
 	coins -= cost
 	click_level += 1
+	save_game()
 	return true
 
 
@@ -139,9 +146,13 @@ func save_game() -> void:
 		"golden_beans": golden_beans,
 		"last_save": Time.get_unix_time_from_system(),
 	}
+	# Di web, folder data bisa belum ada saat pertama kali dimainkan.
+	DirAccess.make_dir_recursive_absolute(OS.get_user_data_dir())
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if file:
-		file.store_string(JSON.stringify(data))
+	if file == null:
+		push_error("Gagal menyimpan game: %s" % error_string(FileAccess.get_open_error()))
+		return
+	file.store_string(JSON.stringify(data))
 
 
 func load_game() -> void:

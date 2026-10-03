@@ -4,3 +4,4 @@
 *.exe
 *.pck
 build/
+.claude/
