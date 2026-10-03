@@ -4,7 +4,13 @@ Game incremental (idle clicker) bertema kedai kopi, dibuat dengan **Godot Engine
 
 Mulai dari menyeduh kopi secara manual, rekrut barista, beli mesin espresso, hingga punya perkebunan kopi sendiri. Kafe akan terus berkembang dan pelanggan berdatangan seiring bisnismu tumbuh.
 
-## Download & Main
+## Main di Browser
+
+**▶ https://dans-vsa.github.io/kopi-tycoon/**
+
+Langsung main tanpa install. Progres tersimpan otomatis di browser.
+
+## Download & Main (Windows)
 
 Unduh `KopiTycoon.rar` dari halaman [Releases](../../releases), ekstrak, lalu jalankan `KopiTycoon.exe`.
 File `KopiTycoon.exe` dan `KopiTycoon.pck` harus berada di folder yang sama.
