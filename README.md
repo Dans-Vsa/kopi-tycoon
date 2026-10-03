@@ -13,7 +13,6 @@ Langsung main tanpa install. Progres tersimpan otomatis di browser.
 ## Download & Main (Windows)
 
 Unduh `KopiTycoon.rar` dari halaman [Releases](../../releases), ekstrak, lalu jalankan `KopiTycoon.exe`.
-File `KopiTycoon.exe` dan `KopiTycoon.pck` harus berada di folder yang sama.
 
 ## Fitur
 
