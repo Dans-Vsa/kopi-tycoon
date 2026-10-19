@@ -5,3 +5,5 @@
 *.pck
 build/
 .claude/
+.omc/
+.playwright-cli/

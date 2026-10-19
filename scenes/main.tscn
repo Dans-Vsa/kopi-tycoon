@@ -53,7 +53,7 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 20
 
-[node name="Columns" type="HBoxContainer" parent="Margin"]
+[node name="Columns" type="BoxContainer" parent="Margin"]
 layout_mode = 2
 theme_override_constants/separation = 28
 
@@ -175,6 +175,7 @@ autowrap_mode = 3
 [node name="GeneratorPanel" type="PanelContainer" parent="Margin/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Right" type="VBoxContainer" parent="Margin/Columns/GeneratorPanel"]
 layout_mode = 2
@@ -187,54 +188,67 @@ theme_override_font_sizes/font_size = 24
 text = "Generator Otomatis"
 horizontal_alignment = 1
 
-[node name="GeneratorList" type="VBoxContainer" parent="Margin/Columns/GeneratorPanel/Right"]
+[node name="GeneratorScroll" type="ScrollContainer" parent="Margin/Columns/GeneratorPanel/Right"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GeneratorList" type="VBoxContainer" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="Barista" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+[node name="Barista" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll/GeneratorList"]
 custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
+mouse_filter = 1
 text = "Barista  (x0)
 +0.1/detik   -   Harga: 15"
 icon = ExtResource("8_barista")
 alignment = 0
 
-[node name="MesinEspresso" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+[node name="MesinEspresso" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll/GeneratorList"]
 custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
+mouse_filter = 1
 text = "Mesin Espresso  (x0)
 +1/detik   -   Harga: 100"
 icon = ExtResource("9_espresso")
 alignment = 0
 
-[node name="GerobakKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+[node name="GerobakKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll/GeneratorList"]
 custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
+mouse_filter = 1
 text = "Gerobak Kopi  (x0)
 +8/detik   -   Harga: 1.10K"
 icon = ExtResource("10_cart")
 alignment = 0
 
-[node name="KedaiKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+[node name="KedaiKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll/GeneratorList"]
 custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
+mouse_filter = 1
 text = "Kedai Kopi  (x0)
 +47/detik   -   Harga: 12.00K"
 icon = ExtResource("11_cafe")
 alignment = 0
 
-[node name="PabrikRoasting" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+[node name="PabrikRoasting" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll/GeneratorList"]
 custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
+mouse_filter = 1
 text = "Pabrik Roasting  (x0)
 +260/detik   -   Harga: 130.00K"
 icon = ExtResource("12_factory")
 alignment = 0
 
-[node name="PerkebunanKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorList"]
+[node name="PerkebunanKopi" type="Button" parent="Margin/Columns/GeneratorPanel/Right/GeneratorScroll/GeneratorList"]
 custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
+mouse_filter = 1
 text = "Perkebunan Kopi  (x0)
 +1.40K/detik   -   Harga: 1.40M"
 icon = ExtResource("13_plantation")
@@ -242,7 +256,6 @@ alignment = 0
 
 [node name="BottomBar" type="HBoxContainer" parent="Margin/Columns/GeneratorPanel/Right"]
 layout_mode = 2
-size_flags_vertical = 10
 theme_override_constants/separation = 8
 alignment = 2
 
@@ -297,6 +310,7 @@ unique_name_in_owner = true
 title = "Prestige"
 initial_position = 2
 size = Vector2i(460, 140)
+dialog_autowrap = true
 dialog_text = "Reset koin, upgrade, dan generator untuk mendapat Biji Emas?
 Setiap Biji Emas memberi bonus +10% ke semua penghasilan."
 
@@ -305,6 +319,7 @@ unique_name_in_owner = true
 title = "Reset Data"
 initial_position = 2
 size = Vector2i(460, 140)
+dialog_autowrap = true
 ok_button_text = "Ya, Reset"
 cancel_button_text = "Batal"
 dialog_text = "Hapus SEMUA progres, termasuk Biji Emas, dan mulai dari awal?

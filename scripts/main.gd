@@ -8,6 +8,36 @@ const LOCKED_ICON_COLOR := Color(0, 0, 0, 0.85)
 const UPGRADE_UNLOCK_EARNED := 25.0
 const PRESTIGE_UNLOCK_EARNED := 250_000.0
 
+# --- Tata letak responsif (lihat DESIGN.md) ---
+## Ukuran logis layar: lanskap untuk desktop, potret untuk ponsel.
+## Dengan stretch aspect "expand", sisi yang lain menyesuaikan bentuk layar.
+const LANDSCAPE_SIZE := Vector2i(1152, 648)
+const PORTRAIT_SIZE := Vector2i(552, 960)
+## [path node, ukuran font lanskap, ukuran font potret]
+const FONT_SIZES := [
+	["Margin/Columns/Left/Header/Title", 36, 26],
+	["Margin/Columns/Left/Header/CoinPanel/CoinRow/CoinsLabel", 28, 30],
+	["Margin/Columns/Left/RateLabel", 15, 19],
+	["Margin/Columns/Left/BottomRow/ClickArea/ClickValueLabel", 15, 20],
+	["Margin/Columns/Left/BottomRow/Actions/InfoLabel", 14, 18],
+	["Margin/Columns/GeneratorPanel/Right/GeneratorTitle", 24, 28],
+	["Margin/Columns/GeneratorPanel/Right/BottomBar/ResetButton", 14, 20],
+	["Margin/Columns/GeneratorPanel/Right/BottomBar/SoundToggle", 14, 20],
+	["UnlockBanner/BannerLabel", 20, 24],
+]
+## [path node, ukuran minimum lanskap, ukuran minimum potret]
+const MIN_SIZES := [
+	["Margin/Columns/Left/Header/CoinPanel/CoinRow/CoinIcon", Vector2(36, 36), Vector2(44, 44)],
+	["Margin/Columns/Left/BottomRow/ClickArea/ClickButton", Vector2(150, 140), Vector2(180, 168)],
+	["Margin/Columns/Left/BottomRow/Actions/ClickUpgradeButton", Vector2(0, 62), Vector2(0, 78)],
+	["Margin/Columns/Left/BottomRow/Actions/PrestigeButton", Vector2(0, 62), Vector2(0, 78)],
+	["Margin/Columns/GeneratorPanel/Right/BottomBar/ResetButton", Vector2.ZERO, Vector2(0, 56)],
+	["Margin/Columns/GeneratorPanel/Right/BottomBar/SoundToggle", Vector2.ZERO, Vector2(0, 56)],
+]
+const GENERATOR_BUTTON_HEIGHT := [66.0, 92.0]
+const THEME_FONT_SIZE := [16, 22]
+const THEME_ICON_WIDTH := [52, 60]
+
 @onready var coins_label: Label = %CoinsLabel
 @onready var rate_label: Label = %RateLabel
 @onready var click_button: TextureButton = %ClickButton
@@ -34,6 +64,7 @@ var generator_buttons: Array[Button] = []
 var _unlocked := {} # Fitur yang sudah terbuka, untuk mendeteksi unlock baru.
 var _banner_queue: Array[String] = []
 var _banner_showing := false
+var _portrait := false
 
 
 func _ready() -> void:
@@ -45,7 +76,7 @@ func _ready() -> void:
 	click_upgrade_button.pressed.connect(_on_click_upgrade)
 	prestige_button.pressed.connect(_on_prestige_pressed)
 	prestige_dialog.confirmed.connect(_on_prestige_confirmed)
-	reset_button.pressed.connect(reset_dialog.popup_centered)
+	reset_button.pressed.connect(_popup_dialog.bind(reset_dialog))
 	reset_dialog.confirmed.connect(_on_reset_confirmed)
 
 	# Urutan tombol di GeneratorList harus sama dengan GameState.GENERATORS.
@@ -53,6 +84,9 @@ func _ready() -> void:
 		var button := generator_list.get_child(i) as Button
 		button.pressed.connect(_on_buy_generator.bind(i))
 		generator_buttons.append(button)
+
+	get_window().size_changed.connect(_update_layout)
+	_update_layout(true)
 
 	# Fitur yang sudah terbuka dari data save tidak perlu diumumkan lagi.
 	_unlocked = _unlock_states()
@@ -76,7 +110,9 @@ func _process(_delta: float) -> void:
 
 	var upgrade_cost := GameState.click_upgrade_cost()
 	click_upgrade_button.visible = states["Upgrade Seduhan"]
-	click_upgrade_button.text = "Upgrade Seduhan (Lv %d)\nHarga: %s" % [
+	# Di potret labelnya dipersingkat agar muat di samping cangkir.
+	var upgrade_name := "Upgrade Lv %d" if _portrait else "Upgrade Seduhan (Lv %d)"
+	click_upgrade_button.text = (upgrade_name + "\nHarga: %s") % [
 		GameState.click_level, GameState.format_number(upgrade_cost)]
 	click_upgrade_button.disabled = GameState.coins < upgrade_cost
 
@@ -132,6 +168,64 @@ func _check_new_unlocks(states: Dictionary) -> void:
 		if states[feature] and not _unlocked.get(feature, false):
 			_show_banner("BARU TERBUKA: %s!" % feature)
 	_unlocked = states
+
+
+# --- Tata letak responsif ---
+
+## Layar lebih tinggi daripada lebar (ponsel) memakai tata letak potret satu kolom
+## dengan teks dan tombol yang lebih besar; selain itu memakai tata letak desktop.
+func _update_layout(force := false) -> void:
+	var window_size := get_window().size
+	var portrait := window_size.y > window_size.x
+	if portrait == _portrait and not force:
+		return
+	_portrait = portrait
+	var mode := 1 if portrait else 0
+
+	get_window().content_scale_size = PORTRAIT_SIZE if portrait else LANDSCAPE_SIZE
+
+	# Tema dipakai bersama oleh semua tombol dan dialog, jadi cukup diubah sekali.
+	theme.default_font_size = THEME_FONT_SIZE[mode]
+	theme.set_constant("icon_max_width", "Button", THEME_ICON_WIDTH[mode])
+
+	var margin := $Margin as MarginContainer
+	var gutter_x := 16 if portrait else 24
+	var gutter_y := 16 if portrait else 20
+	margin.add_theme_constant_override("margin_left", gutter_x)
+	margin.add_theme_constant_override("margin_right", gutter_x)
+	margin.add_theme_constant_override("margin_top", gutter_y)
+	margin.add_theme_constant_override("margin_bottom", gutter_y)
+
+	var columns := $Margin/Columns as BoxContainer
+	columns.vertical = portrait
+	columns.add_theme_constant_override("separation", 12 if portrait else 28)
+	($Margin/Columns/Left as BoxContainer).alignment = \
+			BoxContainer.ALIGNMENT_BEGIN if portrait else BoxContainer.ALIGNMENT_CENTER
+
+	# Bingkai kafe (gambar 500px) memakai bantalan tipis di potret agar muat di lebar layar.
+	var cafe_frame := $Margin/Columns/Left/CafeFrame as PanelContainer
+	if portrait:
+		var frame_style := cafe_frame.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+		frame_style.set_content_margin_all(6)
+		cafe_frame.add_theme_stylebox_override("panel", frame_style)
+	else:
+		cafe_frame.remove_theme_stylebox_override("panel")
+
+	for entry in FONT_SIZES:
+		(get_node(entry[0]) as Control).add_theme_font_size_override("font_size", entry[1 + mode])
+	for entry in MIN_SIZES:
+		(get_node(entry[0]) as Control).custom_minimum_size = entry[1 + mode]
+	for button in generator_buttons:
+		button.custom_minimum_size.y = GENERATOR_BUTTON_HEIGHT[mode]
+
+	# Di potret, tombol Reset dan Suara dibagi rata selebar panel.
+	for button: Control in [reset_button, sound_toggle]:
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL if portrait else Control.SIZE_FILL
+
+
+func _popup_dialog(dialog: ConfirmationDialog) -> void:
+	var width := 500 if _portrait else 460
+	dialog.popup_centered(Vector2i(width, 0))
 
 
 # --- Efek visual ---
@@ -224,7 +318,7 @@ func _on_reset_confirmed() -> void:
 
 
 func _on_prestige_pressed() -> void:
-	prestige_dialog.popup_centered()
+	_popup_dialog(prestige_dialog)
 
 
 func _on_prestige_confirmed() -> void:
